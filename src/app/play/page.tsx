@@ -26,6 +26,7 @@ import { getVideoResolutionFromM3u8, processImageUrl } from '@/lib/utils';
 
 import EpisodeSelector from '@/components/EpisodeSelector';
 import PageLayout from '@/components/PageLayout';
+import VideoDownload from '@/components/VideoDownload';
 
 // 扩展 HTMLVideoElement 类型以支持 hls 属性
 declare global {
@@ -1754,6 +1755,15 @@ function PlayPageClient() {
             )}
           </h1>
         </div>
+        {videoUrl && videoUrl === detail?.episodes[currentEpisodeIndex] && (
+          <VideoDownload
+            key={`${currentSource}:${currentId}:${currentEpisodeIndex}:${videoUrl}`}
+            url={videoUrl}
+            title={videoTitle}
+            episode={totalEpisodes > 1 ? currentEpisodeIndex + 1 : undefined}
+            disabled={isVideoLoading}
+          />
+        )}
         {/* 第二行：播放器和选集 */}
         <div className='space-y-2'>
           {/* 折叠控制 - 仅在 lg 及以上屏幕显示 */}
